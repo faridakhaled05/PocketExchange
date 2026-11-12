@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pocket Exchange</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Pocket Exchange</h1>
+
+      <label for="amount">Amount</label>
+      <input id="amount" type="number" step="any" />
+
+      <div class="currency-row">
+        <div>
+          <label for="from">From</label>
+          <select id="from"></select>
+        </div>
+        <!-- starting state while the currencies are loading -->
+        <button id="swap" type="button" aria-label="Swap currencies">&harr;</button>
+        <div>
+          <label for="to">To</label>
+          <select id="to"></select>
+        </div>
+      </div>
+
+      <button id="convert" type="button" disabled>Convert</button>
+      <p id="message" role="alert"></p>
+      <p id="result" aria-live="polite"></p>
+
+      <section>
+        <div class="history-header">
+          <h2>History</h2>
+          <div>
+            <label for="filter">Filter</label>
+            <select id="filter">
+              <option value="">All</option>
+            </select>
+          </div>
+        </div>
+        <ul id="history-list"></ul>
+        <p id="totals"></p>
+        <button id="clear" type="button">Clear all</button>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
