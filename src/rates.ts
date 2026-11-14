@@ -6,6 +6,7 @@ export const RATES: Record<string, number> = {
   AED: 3.67,
   EGP: 48.5,
 };
+
 export function loadRates(): Promise<Record<string, number>> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(RATES), 1000);
