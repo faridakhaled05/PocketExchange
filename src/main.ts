@@ -1,23 +1,33 @@
 //  While rates load, show “Loading rates…” and disable Convert. When they arrive, fill both dropdowns. Use async/await..
 import { loadRates } from "./rates";
-// import { addConversion } from "./state";
-// import createStore from "./store";
-// const store = createStore({
-//   from: 'USD',
-//   to: 'EUR',
-//   amount: '100',
-//   history: [{ id: 1, from: 'USD', to: 'EUR', amount: 100, result: 85 , date: new Date().toISOString() }],
-//   filter: null,
-//   status: 'loading',
-// });
-// addConversion(store.getState(), { id: 2, from: 'EUR', to: 'USD', amount: 50, result: 54.35, date: new Date().toISOString() });
-// const oldState = store.getState();
-// const theNewConversion = { id: 3, from: 'USD', to: 'GBP', amount: 200, result: 158, date: new Date().toISOString() };
-// const newState = addConversion(oldState, theNewConversion);
-// console.log(newState === oldState); // false, because we created a new state object
-// console.log(newState.history === oldState.history); // false, because we created a new history array
-// console.log(newState.history[1] === oldState.history[0]); // true, because the first item in the new history array is the same object as the first item in the old history array
-// console.log(newState.history[0] === theNewConversion);  //true, because the first in the new history is the the one we just added
+import createStore from "./store";
+import { loadHistory, saveHistory } from "./storage";
+import { createIdGenerator } from "./state";
+import type { AppState } from "./types";
+
+const history = loadHistory();
+
+// history is newest-first, so history[0] holds the highest id; empty history starts at 0
+export const generateId = createIdGenerator((history[0]?.id ?? -1) + 1);
+
+const initialState: AppState = {
+  from: "",
+  to: "",
+  amount: "",
+  history, // restore saved history instead of starting empty
+  filter: null,
+  status: "loading",
+};
+const store = createStore(initialState);
+
+// persist history to localStorage, but only when history itself changed
+let lastSavedHistory = store.getState().history;
+store.subscribe(() => {
+  const currentHistory = store.getState().history;
+  if (currentHistory === lastSavedHistory) return;
+  lastSavedHistory = currentHistory;
+  saveHistory(currentHistory);
+});
 
 const fromSelect = requireEl<HTMLSelectElement>("from");
 const toSelect = requireEl<HTMLSelectElement>("to");

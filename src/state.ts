@@ -58,7 +58,7 @@ export function getTotals(state: AppState): Record<string, number> {
 }, {});
 }
 export function createIdGenerator(start: number): () => number {
-  // let: the counter must advance on every call
+  // let: the counter must advance on every call 
   let current = start;
   return () => current++;
 }
