@@ -7,6 +7,7 @@ interface HistoryListProps {
 }
 
 export function HistoryList({ items, onDelete }: HistoryListProps) {
+
   if (items.length === 0) {
     return <p>No conversions yet.</p>
   }
@@ -15,7 +16,7 @@ export function HistoryList({ items, onDelete }: HistoryListProps) {
     <ul id="history-list">
       {items.map((item) => (
         <HistoryItem key={item.id} item={item} onDelete={onDelete} />
-      ))}
+      ))} 
     </ul>
   )
 }

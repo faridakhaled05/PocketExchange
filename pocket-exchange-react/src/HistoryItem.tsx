@@ -8,7 +8,7 @@ interface HistoryItemProps {
 
 export function HistoryItem({ item, onDelete }: HistoryItemProps) {
   return (
-    <li>
+    <li className="history-item">
       <span>
         {item.amount.toLocaleString('en-US')} {item.from} {'->'}{' '}
         {formatMoney(item.result)} {item.to}

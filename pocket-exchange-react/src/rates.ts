@@ -7,7 +7,6 @@ export const RATES = {
   EGP: 48.5,
 } as const
 
-// The union is derived from the rates, so adding a rate adds a currency.
 export type Currency = keyof typeof RATES
 
 export const CURRENCIES = Object.keys(RATES) as Currency[]
